@@ -1231,7 +1231,10 @@ class Rect(object):
   def clear(self):
     line = ' ' * self.w
     for j in range(self.y, self.y + self.h):
-      self.screen.addstr(j, self.x, line)
+      try:
+        self.screen.addstr(j, self.x, line)
+      except curses.error as e:
+        logger.warn("Rect.clear: {}".format(str(e)))
 
   def __repr__(self):
     return '(%s,%s,%s,%s)' % (self.x, self.y, self.w, self.h)
