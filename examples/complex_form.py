@@ -9,15 +9,14 @@ import sailor as s
 
 now = datetime.datetime.now()
 now_h = now.strftime('%H')
-now_m = '%02d' % ((int(now.strftime('%M')) / 5) * 5)
 
+now_m = '%02d' % (int(int(now.strftime('%M')) / 5) * 5)
 hours = ['%02d' % h for h in range(0, 24)]
 minutes = ['%02d' % m for m in range(0, 60, 5)]
 
 
 def do_exit(app):
   app.exit = True
-
 
 panel = s.Panel(caption=s.Text('sailor is awesome'), controls=[
   s.Labeled('Edit', s.Edit('Type here', id='edit')),

@@ -152,7 +152,7 @@ class Display(View):
         padding = ' ' * min(print_width, self.min_width - len(line))
         try:
           rect.screen.addstr(rect.y + i, rect.x, line[:print_width] + padding, curses.color_pair(col) | self.attr)
-        except curses.error, e:
+        except curses.error as e:
           logger.warn(str(e))
 
 
@@ -341,12 +341,12 @@ class Box(View):
         if self.underscript:
           s = self.underscript.size(rect)
           self.underscript.display(rect.adj_rect(max(3, rect_w - s[0] - 3), rect_h - 1))
-      except curses.error, e:
+      except curses.error as e:
         # We should not have sent this invalid draw command...
         logger.warn(e)
       try:
         self.inner.display(rect.adj_rect(1 + self.x_margin, 1 + self.y_margin, 1 + self.x_margin, 1 + self.y_margin))
-      except curses.error, e:
+      except curses.error as e:
         # We should not have sent this invalid draw command...
         logger.warn(e)
 
@@ -898,7 +898,7 @@ class Edit(Control):
       # Custom highlighting
       try:
         colorized = self.highlight(self.value)
-      except Exception, e:
+      except Exception as e:
         logger.error(str(e))
 
     # Make the field longer for the cursor or display purposes
@@ -983,7 +983,7 @@ class AutoCompleteEdit(Edit):
   complete_fn is a function that gets the current word under
   the cursor, and should return all possible completions.
   """
-  def __init__(self, value, complete_fn, min_size=0, letters=string.letters, **kwargs):
+  def __init__(self, value, complete_fn, min_size=0, letters=string.ascii_letters, **kwargs):
     super(AutoCompleteEdit, self).__init__(value=value, min_size=min_size, **kwargs)
     self.complete_fn = complete_fn
     self.popup_visible = False
@@ -1175,7 +1175,7 @@ class PreviewPane(Control):
       with file(filename, 'w') as f:
         f.write(self._text)
       Toasty('%s saved' % filename).show(self.app)
-    except Exception, e:
+    except Exception as e:
       Toasty(str(e), duration=datetime.timedelta(seconds=5)).show(self.app)
 
 
