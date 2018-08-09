@@ -782,7 +782,14 @@ class Combo(Control):
       if is_enter(ev):
         x = max(0, self.last_combo.rect.x - 2)
         y = max(0, self.last_combo.rect.y - 1)
-        Popup(SelectList(self.choices, self.index), self.on_popup_close, x=x, y=y).show(ev.app)
+        h, w = ev.app.screen.getmaxyx()
+        height = h - y - 3
+        # the combo goes beyond the lower limit of the screen
+        if height <= 0:
+            # choose minimum height and move the combo slightly up
+            height = 1
+            y = h - 4
+        Popup(SelectList(self.choices, self.index, height=height), self.on_popup_close, x=x, y=y).show(ev.app)
         ev.stop()
 
   def on_popup_close(self, popup, app):
