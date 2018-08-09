@@ -597,7 +597,7 @@ class SelectList(Control):
 
   def on_event(self, ev):
     if ev.type == 'key':
-      change, self.index, self.scroll_offset = handle_scroll_key(ev.key, self.index, len(self.choices), self.scroll_offset, self.last_render.rect.h)
+      change, self.index, self.scroll_offset = handle_scroll_key(ev.key, self.index, len(self.choices), self.scroll_offset, self.height)
       if change:
         ev.stop()
 
