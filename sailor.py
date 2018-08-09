@@ -185,8 +185,8 @@ class Centered(View):
 
   def disp(self, rect):
     size = self.inner.size(rect)
-    x = (rect.w - size[0]) / 2
-    y = (rect.h - size[1]) / 2
+    x = int((rect.w - size[0]) / 2)
+    y = int((rect.h - size[1]) / 2)
     irect = rect.sub_rect(x, y, size[0], size[1])
     self.inner.display(irect)
 
