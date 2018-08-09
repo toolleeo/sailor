@@ -153,7 +153,7 @@ class Display(View):
         try:
           rect.screen.addstr(rect.y + i, rect.x, line[:print_width] + padding, curses.color_pair(col) | self.attr)
         except curses.error as e:
-          logger.warn(str(e))
+            logger.warn("Display.disp: {}".format(str(e)))
 
 
 class Positioned(View):
@@ -343,12 +343,12 @@ class Box(View):
           self.underscript.display(rect.adj_rect(max(3, rect_w - s[0] - 3), rect_h - 1))
       except curses.error as e:
         # We should not have sent this invalid draw command...
-        logger.warn(e)
+        logger.warn("Box.disp 1: {}".format(e))
       try:
         self.inner.display(rect.adj_rect(1 + self.x_margin, 1 + self.y_margin, 1 + self.x_margin, 1 + self.y_margin))
       except curses.error as e:
         # We should not have sent this invalid draw command...
-        logger.warn(e)
+        logger.warn("Box.disp 2: {}".format(e))
 
 
 #----------------------------------------------------------------------
@@ -906,7 +906,7 @@ class Edit(Control):
       try:
         colorized = self.highlight(self.value)
       except Exception as e:
-        logger.error(str(e))
+          logger.error("Edit.render: {}".format(str(e)))
 
     # Make the field longer for the cursor or display purposes
     ext_len = max(0, max(self.cursor + 1 if focused else 0, self.min_size) - len(self.value))
